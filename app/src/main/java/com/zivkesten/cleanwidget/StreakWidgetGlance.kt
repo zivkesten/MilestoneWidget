@@ -53,8 +53,8 @@ class StreakWidgetGlance : GlanceAppWidget() {
     }
 
     companion object {
-        private const val PREFERENCES_NAME = PREFERENCE_NAME
-        private val STREAK_COUNT_KEY = intPreferencesKey(STREAK_COUNT)
+        const val PREFERENCES_NAME = PREFERENCE_NAME
+        val STREAK_COUNT_KEY = intPreferencesKey(STREAK_COUNT)
 
         suspend fun updateWidget(context: Context, selectedDate: LocalDate) {
             // Simulate fetching the streak count for the selected date
@@ -87,9 +87,7 @@ class StreakWidgetGlance : GlanceAppWidget() {
 
         private fun saveStreakCount(context: Context, count: Int) {
             val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-            Log.d("Zivi", "Saving $count")
             preferences.edit().putInt(STREAK_COUNT_KEY.name, count).apply()
-            Log.d("Zivi", "post save ${getStreakCount(context)}")
         }
     }
 }
