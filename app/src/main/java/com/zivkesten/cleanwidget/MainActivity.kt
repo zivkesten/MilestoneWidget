@@ -18,15 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.VectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zivkesten.cleanwidget.ui.theme.CleanWidgetTheme
 import kotlinx.coroutines.CoroutineScope
@@ -92,9 +89,6 @@ private fun showDatePicker(context: Context, scope: CoroutineScope, onPicked: ()
     val calendar = Calendar.getInstance()
     DatePickerDialog(context, { _, year, month, dayOfMonth ->
         val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
-        val selectedDateString = selectedDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
-        //SharedPreferencesUtil.saveStartDate(context, selectedDateString)
-        Log.d("Zivi", "sleecteDAte: $selectedDate")
         scope.launch {
             StreakWidgetGlance.updateWidget(context, selectedDate)
             onPicked()

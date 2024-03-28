@@ -3,7 +3,6 @@ package com.zivkesten.cleanwidget
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.ViewModel
 
 sealed class UiState(open val resId: Int, open val text: String) {
