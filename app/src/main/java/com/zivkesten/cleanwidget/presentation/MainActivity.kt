@@ -1,9 +1,8 @@
-package com.zivkesten.cleanwidget
+package com.zivkesten.cleanwidget.presentation
 
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -29,7 +28,6 @@ import com.zivkesten.cleanwidget.ui.theme.CleanWidgetTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class MainActivity : ComponentActivity() {
