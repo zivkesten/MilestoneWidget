@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -25,10 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zivkesten.cleanwidget.ui.theme.CleanWidgetTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Calendar
+import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +34,11 @@ class MainActivity : ComponentActivity() {
         val context = this
 
         setContent {
-        val viewModel: StreakViewModel = viewModel()
-
+            val viewModel: StreakViewModel = viewModel()
             CleanWidgetTheme {
                 // A surface container using the 'background' color from the theme
                 MainScreen(context, viewModel.state) {
-                    viewModel.datePicked()
+                    viewModel.datePicked(context, it)
                 }
             }
         }
@@ -49,8 +46,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(context: Context, state: UiState, onPicked: () -> Unit) {
-    val coroutineScope = rememberCoroutineScope()
+fun MainScreen(context: Context, state: UiState, onPicked: (LocalDate) -> Unit) {
     Column {
         Image(
             modifier = Modifier.fillMaxWidth(),
@@ -71,25 +67,33 @@ fun MainScreen(context: Context, state: UiState, onPicked: () -> Unit) {
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
-            if (state is UiState.QuestionState) {
-                Button(
-                    onClick = { showDatePicker(context, coroutineScope, onPicked) },
-                    modifier = Modifier.align(CenterHorizontally)
-                ) {
-                    Text(text = "בחר תאריך")
+            when (state) {
+                is UiState.QuestionState ->
+                    Button(
+                        onClick = { showDatePicker(context, onPicked) },
+                        modifier = Modifier.align(CenterHorizontally)
+                    ) {
+                        Text(text = "בחר תאריך")
+                    }
+
+                is UiState.AnswerState -> {
+                    Button(
+                        onClick = { exitProcess(0) },
+                        modifier = Modifier.align(CenterHorizontally)
+                    ) {
+                        Text("סגור את המסך")
+                    }
                 }
             }
         }
     }
 }
 
-private fun showDatePicker(context: Context, scope: CoroutineScope, onPicked: () -> Unit) {
+private fun showDatePicker(context: Context, onPicked: (LocalDate) -> Unit) {
     val calendar = Calendar.getInstance()
     DatePickerDialog(context, { _, year, month, dayOfMonth ->
         val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
-        scope.launch {
-            StreakWidgetGlance.updateWidget(context, selectedDate)
-            onPicked()
-        }
+                onPicked(selectedDate)
+
     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
 }
