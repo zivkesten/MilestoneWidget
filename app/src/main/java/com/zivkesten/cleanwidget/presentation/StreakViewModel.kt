@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zivkesten.cleanwidget.R
@@ -17,7 +18,8 @@ class StreakViewModel: ViewModel() {
     fun datePicked(context: Context, selectedDate: LocalDate) {
         viewModelScope.launch {
             PreferenceManager.saveStartDate(context, START_DATE_KEY.name, selectedDate)
-            StreakWidgetGlance.updateWidget(context)
+            //StreakWidgetGlance.updateWidget(context)
+            StreakWidgetGlance().updateAll(context)
             state = UiState.AnswerState(R.drawable.yedid_ans, "יופי סגור את האפליקציה והבט בווידג׳ט")
         }
     }

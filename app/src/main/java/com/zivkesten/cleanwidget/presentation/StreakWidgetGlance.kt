@@ -18,7 +18,6 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
-import androidx.glance.appwidget.updateAll
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -39,6 +38,7 @@ class StreakWidgetGlance : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val localDate = PreferenceManager.getLocalDate(context, START_DATE_KEY.name)
+        Log.d("Zivi", "localDate $localDate")
         provideContent {
             StreakWidgetContent(localDate)
         }
@@ -99,15 +99,5 @@ class StreakWidgetGlance : GlanceAppWidget() {
         private val SMALL_SQUARE = DpSize(100.dp, 100.dp)
         private val HORIZONTAL_RECTANGLE = DpSize(250.dp, 100.dp)
         private val BIG_SQUARE = DpSize(250.dp, 250.dp)
-
-        suspend fun updateWidget(context: Context) {
-            // Persist the streak count
-
-            Log.d("Zivi", "update")
-            // Trigger widget update
-           // CoroutineScope(Dispatchers.IO).launch {
-                StreakWidgetGlance().updateAll(context)
-          //  }
-        }
     }
 }
