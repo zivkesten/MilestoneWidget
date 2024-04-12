@@ -1,4 +1,4 @@
-package com.zivkesten.cleanwidget
+package com.zivkesten.cleanwidget.services
 
 import android.content.Context
 import androidx.glance.appwidget.updateAll

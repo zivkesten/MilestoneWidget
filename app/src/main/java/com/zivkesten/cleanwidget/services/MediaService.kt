@@ -1,9 +1,9 @@
-package com.zivkesten.cleanwidget
+package com.zivkesten.cleanwidget.services
 
 import android.content.Context
 import android.media.MediaPlayer
 
-object MediaManager {
+object MediaService {
     var mediaPlayer: MediaPlayer? = null
 
     fun playOrStopSound(context: Context, assetPath: String) {

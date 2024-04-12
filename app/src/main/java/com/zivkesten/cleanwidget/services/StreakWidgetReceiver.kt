@@ -1,4 +1,4 @@
-package com.zivkesten.cleanwidget
+package com.zivkesten.cleanwidget.services
 
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver

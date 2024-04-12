@@ -1,9 +1,9 @@
 package com.zivkesten.cleanwidget.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,14 +31,13 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.zivkesten.cleanwidget.R
 import com.zivkesten.cleanwidget.domain.getStreakCount
+import com.zivkesten.cleanwidget.services.PreferenceService
 import java.time.LocalDate
-
 
 class StreakWidgetGlance : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val localDate = PreferenceManager.getLocalDate(context, START_DATE_KEY.name)
-        Log.d("Zivi", "localDate $localDate")
+        val localDate = PreferenceService.getLocalDate(context, START_DATE_KEY.name)
         provideContent {
             StreakWidgetContent(localDate)
         }
@@ -76,7 +75,7 @@ class StreakWidgetGlance : GlanceAppWidget() {
                 }
                 val text = when {
                     size.width < 200.dp -> streakCount.toString()
-                    else -> "אתה נקי כבר $streakCount ימים"
+                    else -> stringResource(R.string.clean_time_text, streakCount)
                 }
 
                 Text(

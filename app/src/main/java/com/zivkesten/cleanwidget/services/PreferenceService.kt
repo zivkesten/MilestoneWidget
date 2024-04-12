@@ -1,11 +1,11 @@
-package com.zivkesten.cleanwidget.presentation
+package com.zivkesten.cleanwidget.services
 
 import android.content.Context
-import android.util.Log
+import com.zivkesten.cleanwidget.presentation.StreakWidgetGlance
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-object PreferenceManager {
+object PreferenceService {
     fun saveStartDate(context: Context, key: String, date: LocalDate) {
 
         val sharedPreferences = context.getSharedPreferences(
@@ -15,12 +15,10 @@ object PreferenceManager {
         with(sharedPreferences.edit()) {
             // Convert LocalDate to String
             val dateString = date.format(DateTimeFormatter.ISO_LOCAL_DATE)
-            Log.w("Zivi", "save dateString $dateString")
             putString(key, dateString)
             apply()
         }
         val l = getLocalDate(context, key)
-        Log.w("Zivi", "get dateString $l")
     }
 
     fun getLocalDate(context: Context, key: String): LocalDate? {
@@ -29,7 +27,6 @@ object PreferenceManager {
             Context.MODE_PRIVATE)
 
         val dateString = sharedPreferences.getString(key, null) ?: return null
-        Log.d("Zivi", "dateString $dateString")
         // Convert String to LocalDate
         return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
     }

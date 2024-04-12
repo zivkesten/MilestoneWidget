@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zivkesten.cleanwidget.R
 import com.zivkesten.cleanwidget.presentation.StreakWidgetGlance.Companion.START_DATE_KEY
+import com.zivkesten.cleanwidget.services.PreferenceService
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -17,10 +18,9 @@ class StreakViewModel: ViewModel() {
 
     fun datePicked(context: Context, selectedDate: LocalDate) {
         viewModelScope.launch {
-            PreferenceManager.saveStartDate(context, START_DATE_KEY.name, selectedDate)
-            //StreakWidgetGlance.updateWidget(context)
+            PreferenceService.saveStartDate(context, START_DATE_KEY.name, selectedDate)
             StreakWidgetGlance().updateAll(context)
-            state = UiState.AnswerState(R.drawable.yedid_ans, "יופי סגור את האפליקציה והבט בווידג׳ט")
+            state = UiState.AnswerState(R.drawable.yedid_ans, context.getString(R.string.close_text))
         }
     }
 }

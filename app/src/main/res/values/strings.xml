@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">אבא צלול</string>
+    <string name="close_text">יופי סגור את האפליקציה והבט בווידג׳ט</string>
+    <string name="close_screen_tex">סגור את המסך</string>
+    <string name="play_medidation_text">נגן תירגול בוקר</string>
+    <string name="selecte_date">בחר תאריך</string>
+    <string name="clean_time_text">אתה נקי כבר %1$s ימים</string>
 </resources>
