@@ -18,7 +18,6 @@ object PreferenceService {
             putString(key, dateString)
             apply()
         }
-        val l = getLocalDate(context, key)
     }
 
     fun getLocalDate(context: Context, key: String): LocalDate? {
