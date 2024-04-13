@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zivkesten.cleanwidget.R
 import com.zivkesten.cleanwidget.presentation.StreakWidgetGlance.Companion.START_DATE_KEY
 import com.zivkesten.cleanwidget.services.PreferenceService
 import kotlinx.coroutines.launch
