@@ -42,6 +42,7 @@ fun MainScreen(
             contentDescription = "image"
         )
 
+
         Column(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
