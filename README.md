@@ -23,7 +23,7 @@ The Streak Widget is an Android widget built using the Jetpack Compose Glance AP
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourgithub/streak-widget.git
+   git clone git@github.com:zivkesten/CleanWidget.git
    ```
 
 2. **Open the project in Android Studio**
@@ -68,7 +68,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+Your Name - [@NixonTheRipper](https://twitter.com/yourtwitter) 
 
-Project Link: [https://github.com/yourgithub/streak-widget](https://github.com/yourgithub/streak-widget)
+Visit my Medium page at www.zivkest.medium.com
 
