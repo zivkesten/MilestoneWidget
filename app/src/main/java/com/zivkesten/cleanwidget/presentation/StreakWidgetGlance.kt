@@ -38,8 +38,10 @@ class StreakWidgetGlance : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val localDate = PreferenceService.getLocalDate(context, START_DATE_KEY.name)
+        val streakCount = localDate?.getStreakCount() ?: 0
+        val text = context.resources.getString(R.string.clean_time_text, streakCount.toString())
         provideContent {
-            StreakWidgetContent(localDate)
+            StreakWidgetContent(streakCount, text)
         }
     }
 
@@ -52,8 +54,8 @@ class StreakWidgetGlance : GlanceAppWidget() {
     )
 
     @Composable
-    fun StreakWidgetContent(localDate: LocalDate?) {
-        val streakCount = localDate?.getStreakCount() ?: 0
+    fun StreakWidgetContent(streakCount: Int, text: String) {
+
         val size = LocalSize.current
         val mod = if (size.height >= HORIZONTAL_RECTANGLE.height) {
             GlanceModifier.background(ColorProvider(Color.Transparent))
@@ -63,7 +65,7 @@ class StreakWidgetGlance : GlanceAppWidget() {
         Box {
             if (size.height >= HORIZONTAL_RECTANGLE.height) {
                 Image(
-                    provider = ImageProvider(R.drawable.yedid_ans),
+                    provider = ImageProvider(R.mipmap.ic_launcher),
                     contentDescription = ""
                 )
             }
@@ -73,13 +75,12 @@ class StreakWidgetGlance : GlanceAppWidget() {
                 Box(modifier = GlanceModifier.defaultWeight()) {
                     // This empty container acts as a flexible spacer
                 }
-                val text = when {
-                    size.width < 200.dp -> streakCount.toString()
-                    else -> stringResource(R.string.clean_time_text, streakCount)
-                }
 
                 Text(
-                    text = text,
+                    text = when {
+                        size.width < 200.dp -> streakCount.toString()
+                        else -> text
+                    },
                     modifier = GlanceModifier.padding(16.dp),
                     style = TextStyle(
                         color = ColorProvider(Color.White),

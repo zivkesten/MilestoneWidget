@@ -29,24 +29,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val context = this
-        val onUpdate = {
-            finishAffinity()
-        }
         setContent {
             val viewModel: StreakViewModel = viewModel()
-            CleanWidgetTheme {
-                // A surface container using the 'background' color from the theme
-                MainScreen(context, viewModel.state,
-                    onPicked =  {
-                        viewModel.datePicked(context, it)
-                        scheduleWidgetUpdate(context)
-                    },
-                    onPlay = {
-                        MediaService.playOrStopSound(context, "morning.mp3")
-                    },
-                    onClose = onUpdate
-                )
-            }
+            MainScreen(context, viewModel.state,
+                onPicked =  {
+                    viewModel.datePicked(context, it)
+                    scheduleWidgetUpdate(context)
+                },
+            )
         }
     }
 
@@ -60,18 +50,6 @@ class MainActivity : ComponentActivity() {
         MediaService.mediaPlayer?.release()
         MediaService.mediaPlayer = null
         super.onDestroy()
-    }
-}
-
-@Composable
-fun PlaySoundButton(modifier: Modifier, onPlay: () -> Unit) {
-    Button(
-        modifier = modifier.then(
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp)),
-        onClick = onPlay ) {
-        Text(text = stringResource(R.string.play_medidation_text), fontSize = 20.sp)
     }
 }
 

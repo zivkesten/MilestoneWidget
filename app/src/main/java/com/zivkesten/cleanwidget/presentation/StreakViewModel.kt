@@ -20,7 +20,6 @@ class StreakViewModel: ViewModel() {
         viewModelScope.launch {
             PreferenceService.saveStartDate(context, START_DATE_KEY.name, selectedDate)
             StreakWidgetGlance().updateAll(context)
-            state = UiState.AnswerState(R.drawable.yedid_ans, context.getString(R.string.close_text))
         }
     }
 }

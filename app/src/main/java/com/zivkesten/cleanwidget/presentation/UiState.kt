@@ -7,7 +7,6 @@ sealed class UiState(open val resId: Int, open val text: String) {
     data class AnswerState(override val resId: Int, override val text: String): UiState(resId, text)
 
     companion object {
-        fun initial() = QuestionState(R.drawable.yedid_ask, "באיזה יום התחלת את ההפסקה, או באיזה יום אתה מתכנן להפסיק?")
-
+        fun initial() = QuestionState(R.mipmap.ic_launcher, "Select the day you plan to start")
     }
 }
