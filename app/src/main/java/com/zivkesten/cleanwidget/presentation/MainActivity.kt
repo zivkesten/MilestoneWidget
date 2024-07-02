@@ -18,8 +18,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.zivkesten.cleanwidget.R
+import com.zivkesten.cleanwidget.domain.getStreakCount
 import com.zivkesten.cleanwidget.presentation.screens.MainScreen
 import com.zivkesten.cleanwidget.services.MediaService
+import com.zivkesten.cleanwidget.services.PreferenceService
 import com.zivkesten.cleanwidget.services.UpdateWidgetWorker
 import com.zivkesten.cleanwidget.ui.theme.CleanWidgetTheme
 import java.util.concurrent.TimeUnit
@@ -32,17 +34,17 @@ class MainActivity : ComponentActivity() {
         val onUpdate = {
             finishAffinity()
         }
+        val localDate = PreferenceService.getLocalDate(context, StreakWidgetGlance.START_DATE_KEY.name)
+        val streak = localDate?.getStreakCount() ?: 0
         setContent {
+        val string = stringResource(R.string.clean_time_text, streak)
             val viewModel: StreakViewModel = viewModel()
             CleanWidgetTheme {
                 // A surface container using the 'background' color from the theme
-                MainScreen(context, viewModel.state,
+                MainScreen(context, viewModel.state, string,
                     onPicked =  {
                         viewModel.datePicked(context, it)
                         scheduleWidgetUpdate(context)
-                    },
-                    onPlay = {
-                        MediaService.playOrStopSound(context, "morning.mp3")
                     },
                     onClose = onUpdate
                 )

@@ -5,16 +5,16 @@ import android.media.MediaPlayer
 
 object MediaService {
     var mediaPlayer: MediaPlayer? = null
+    private var currentSoundDuration: Long = 0L  // Duration of the current sound
 
-    fun playOrStopSound(context: Context, assetPath: String) {
-        // Check if mediaPlayer is playing
+    fun playOrStopSound(context: Context, assetPath: String): Long {
         if (mediaPlayer?.isPlaying == true) {
-            // If playing, stop and release the player
             mediaPlayer?.stop()
             mediaPlayer?.release()
             mediaPlayer = null
+            currentSoundDuration = 0L
+            return 0L  // Return 0 when stopping the sound
         } else {
-            // If not playing, prepare a new MediaPlayer instance and play the sound
             val assetFileDescriptor = context.assets.openFd(assetPath)
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(
@@ -25,12 +25,13 @@ object MediaService {
                 prepare()
                 start()
             }
-
-            // Set up MediaPlayer cleanup on completion
+            currentSoundDuration = mediaPlayer?.duration?.toLong() ?: 0L  // Get the duration in milliseconds
             mediaPlayer?.setOnCompletionListener {
                 it.release()
                 mediaPlayer = null
+                currentSoundDuration = 0L
             }
+            return currentSoundDuration
         }
     }
 }

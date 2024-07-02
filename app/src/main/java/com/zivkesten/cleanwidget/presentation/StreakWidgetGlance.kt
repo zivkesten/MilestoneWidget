@@ -54,29 +54,18 @@ class StreakWidgetGlance : GlanceAppWidget() {
     @Composable
     fun StreakWidgetContent(localDate: LocalDate?) {
         val streakCount = localDate?.getStreakCount() ?: 0
-        val size = LocalSize.current
-        val mod = if (size.height >= HORIZONTAL_RECTANGLE.height) {
-            GlanceModifier.background(ColorProvider(Color.Transparent))
-        } else {
-            GlanceModifier.background(ColorProvider(Color.Black))
-        }
         Box {
-            if (size.height >= HORIZONTAL_RECTANGLE.height) {
-                Image(
-                    provider = ImageProvider(R.drawable.yedid_ans),
-                    contentDescription = ""
-                )
-            }
+            Image(
+                provider = ImageProvider(R.drawable.yedid_ans),
+                contentDescription = ""
+            )
             Column(
-                modifier = GlanceModifier.fillMaxSize().then(mod).clickable(onClick =  actionStartActivity(MainActivity::class.java)),
+                modifier = GlanceModifier.fillMaxSize()/*.then(mod)*/.clickable(onClick =  actionStartActivity(MainActivity::class.java)),
                 horizontalAlignment = Alignment.Horizontal.CenterHorizontally) {
                 Box(modifier = GlanceModifier.defaultWeight()) {
                     // This empty container acts as a flexible spacer
                 }
-                val text = when {
-                    size.width < 200.dp -> streakCount.toString()
-                    else -> stringResource(R.string.clean_time_text, streakCount)
-                }
+                val text = streakCount.toString()
 
                 Text(
                     text = text,
@@ -84,7 +73,7 @@ class StreakWidgetGlance : GlanceAppWidget() {
                     style = TextStyle(
                         color = ColorProvider(Color.White),
                         textAlign = TextAlign.Center,
-                        fontSize = if (size.width < 250.dp) 20.sp else 30.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
                 )
